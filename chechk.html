@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Secret 💕</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html, body{
+  margin:0;
+  width:100%;
+  height:100%;
+}
+
+body{
+  background:
+    radial-gradient(circle at top left, #ffb3c6, transparent 40%),
+    radial-gradient(circle at bottom right, #ffc8dd, transparent 40%),
+    linear-gradient(135deg, #ff5d8f, #ff87ab);
+  font-family: 'Comic Sans MS', cursive;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+
+.card{
+  background:rgba(255,255,255,0.92);
+  backdrop-filter: blur(14px);
+  padding:clamp(28px, 4vw, 60px);
+  border-radius:32px;
+  width:clamp(320px, 65vw, 760px);
+  max-height:90vh;
+  text-align:center;
+  box-shadow:
+    0 30px 70px rgba(0,0,0,0.25),
+    inset 0 0 0 5px #ffd1e1;
+}
+
+h3{
+  color:#ff2f6d;
+  font-size:clamp(26px, 3vw, 42px);
+  animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+
+p{
+  font-size:clamp(16px, 2vw, 22px);
+}
+
+button{
+  margin:12px;
+  padding:14px 34px;
+  border:none;
+  border-radius:35px;
+  background:linear-gradient(135deg,#ff4d6d,#ff85a2);
+  color:white;
+  cursor:pointer;
+  font-size:18px;
+  transition:0.3s;
+}
+
+button:hover{ transform:scale(1.1); }
+
+.hidden{ display:none; }
+
+.boxes{
+  display:flex;
+  justify-content:space-around;
+  margin-top:30px;
+}
+
+.box{
+  width:90px;
+  height:90px;
+  background:linear-gradient(135deg,#ffe0eb,#ffc2d6);
+  border-radius:22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:34px;
+  cursor:pointer;
+  transition:0.35s;
+}
+
+.box:hover{ transform:scale(1.15); }
+
+#boxText,#answerText,#final{
+  margin-top:20px;
+  color:#ff2f6d;
+}
+
+/* IMAGE – FACE SAFE */
+.photo{
+  display:block;
+  margin:25px auto;
+  width:280px;
+  height:280px;
+  object-fit:cover;
+  object-position:center top;
+  border-radius:22px;
+  box-shadow:0 18px 35px rgba(0,0,0,0.4);
+}
+
+#nextBtn{
+  display:block;
+  margin:20px auto 0;
+}
+
+/* CONFETTI */
+.confetti{
+  position:fixed;
+  width:10px;
+  height:14px;
+  top:-10px;
+  animation:fall 3s linear forwards;
+  z-index:999;
+}
+
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+/* floating emojis */
+.float{
+  position:absolute;
+  animation:floatUp 8s linear infinite;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-120vh);opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgm" loop>
+  <source src="The Metro Proposal.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="loveSong">
+  <source src="Po Indru Neeyaga.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+
+<div id="s1">
+  <h3>Hey Giri Senior 💖</h3>
+  <p>Before Valentine,<br>oru question 🙂</p>
+  <button onclick="start()">Maatnen 💫</button>
+</div>
+
+<div id="s2" class="hidden">
+  <p>What makes her happiest?</p>
+  <button onclick="wrong()">🍦Your money</button>
+  <button onclick="correct()">🎧 Your voice</button>
+  <button onclick="wrong()">😂 Your hair</button>
+  <p id="answerText"></p>
+</div>
+
+<div id="s3" class="hidden">
+  <p>There are a few things you should know…</p>
+  <div class="boxes">
+    <div class="box" onclick="openBox(1)">🎀</div>
+    <div class="box" onclick="openBox(2)">✨</div>
+    <div class="box" onclick="openBox(3)">💗</div>
+  </div>
+  <p id="boxText"></p>
+</div>
+
+<div id="s4" class="hidden">
+  <p>Will you be my Valentine? 💞</p>
+  <button onclick="yes()">Yes 💕</button>
+  <button onclick="hmm()">No 👀</button>
+  <p id="final"></p>
+  <img src="us.jpg" id="photo" class="photo hidden" style="display:none;">
+  <button id="nextBtn" class="hidden" onclick="next(4)">Next ➜</button>
+</div>
+
+<div id="s5" class="hidden">
+  <h3>One last thing 🫶</h3>
+  <p>Now say <b>“I love you my Future wife”</b><br>
+  to the girl sitting beside you 💗</p>
+</div>
+
+</div>
+
+<script>
+const bgm = document.getElementById("bgm");
+const loveSong = document.getElementById("loveSong");
+
+function start(){
+  bgm.currentTime = 107;
+  bgm.play();
+  next(1);
+}
+
+function next(n){
+  document.getElementById("s"+n).classList.add("hidden");
+  document.getElementById("s"+(n+1)).classList.remove("hidden");
+}
+
+function correct(){
+  document.getElementById("answerText").innerText =
+  "Correct… she melts for your voice 😌";
+  setTimeout(()=>next(2),1200);
+}
+
+function wrong(){
+  document.getElementById("answerText").innerText="Wrong 😜Think smart";
+}
+
+function openBox(n){
+  const t=document.getElementById("boxText");
+  if(n===1)t.innerText="She loves you more than her parents 🥹";
+  if(n===2)t.innerText="She feels everything deeply,so olunga pathuka seriya 💞";
+  if(n===3){
+    t.innerText="She is sighting you since 2023 🫣";
+    setTimeout(()=>next(3),1200);
+  }
+}
+
+/* CONFETTI 3–5 seconds */
+function launchConfetti(){
+  const interval = setInterval(()=>{
+    for(let i=0;i<25;i++){
+      const c=document.createElement("div");
+      c.className="confetti";
+      c.style.left=Math.random()*100+"vw";
+      c.style.background=`hsl(${Math.random()*360},90%,70%)`;
+      c.style.animationDuration=(2+Math.random()*2)+"s";
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),4000);
+    }
+  },300);
+
+  setTimeout(()=>clearInterval(interval),4000);
+}
+
+function yes(){
+  document.getElementById("final").innerText="That's my boy ❤️🫶";
+
+  const img=document.getElementById("photo");
+  img.style.display="block";
+  img.classList.remove("hidden");
+
+  document.getElementById("nextBtn").classList.remove("hidden");
+
+  bgm.pause();
+  loveSong.currentTime=0;
+  loveSong.play();
+
+  launchConfetti();
+}
+
+function hmm(){
+  document.getElementById("final").innerText =
+  "Ongi adicha ondraton weight paakuriya? 😌";
+
+  const img=document.getElementById("photo");
+  img.classList.add("hidden");
+  img.style.display="none";
+
+  document.getElementById("nextBtn").classList.add("hidden");
+
+  loveSong.pause();
+  loveSong.currentTime=0;
+}
+
+const emojis=["🌸","✨","🎀","🌷","💕"];
+setInterval(()=>{
+  const e=document.createElement("div");
+  e.className="float";
+  e.innerText=emojis[Math.random()*emojis.length|0];
+  e.style.left=Math.random()*100+"vw";
+  e.style.fontSize=Math.random()*24+18+"px";
+  document.body.appendChild(e);
+  setTimeout(()=>e.remove(),8000);
+},350);
+</script>
+
+</body>
+</html>
